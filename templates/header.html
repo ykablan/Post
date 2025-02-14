@@ -36,9 +36,10 @@
 
                     {% if user.is_superuser %}
                         <li><a href="{% url 'postt:create' %}">Post Oluştur</a></li>
+                        <li><a href="{% url 'postt:kapali' %}">Kapalı Postlar</a></li>
                     {% endif %}
 
-                    <li><a href="{% url 'postt:index' %}">Listele</a></li>
+                    <li><a href="{% url 'postt:index' %}">Açık Postlar</a></li>
                     <li><a href="{% url 'accounts:logout' %}">Çıkış</a></li>
 
                 {% else %}  

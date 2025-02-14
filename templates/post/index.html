@@ -15,8 +15,9 @@
                     {% if post.image %}
                         <img src="{{post.image.url}}" class="img-responsive">
                     {% endif %}
-                  <h3>{{ post.title }} <small> {{post.publishing_date | timesince}} önce</small></h3>
-                  <h4>Kullanıcı: {{post.user.get_full_name}}</h4>
+                  <h3>{{ post.title }} <small> {{post.publishing_date | timesince}} önce </small></h3>
+
+                  <h4>Kaydı Oluşturan: {{post.user.get_full_name}} <small>Yorum Sayısı:{{post.get_comment_count}}-Son Yorum:{{post.get_son_yorum_tarihi | timesince}} önce</small></h4>
                   <p>{{post.content |safe| linebreaks |truncatechars:150}}</p>
                   <p>
                         <a href="{{post.get_absolute_url}}" class="btn btn-primary" role="button">İncele</a>

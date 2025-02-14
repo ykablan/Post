@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404,HttpResponseRedirect,redirect
-from .models import Post
+from .models import Post, Comment
 from.forms import PostForm, CommentForm
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -7,7 +7,12 @@ from django.db.models import Q
 
 
 def post_index(request):
-    post_list = Post.objects.all()
+    post_list = Post.objects.filter(checked = False)
+    url = request.get_full_path()
+    if (url == '/post/kapali/'):
+        post_list = Post.objects.filter(checked = True)
+
+    
 
     query = request.GET.get('q')
     if query:
@@ -28,15 +33,19 @@ def post_index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         posts = paginator.page(paginator.num_pages)
-
-    return render(request, 'post/index.html', {'posts': posts})
+    
+    
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'post/index.html', context)
 
 def post_create(request):
 
     if request.user.is_authenticated == False:
         return redirect('postt:index')
 
-    form = PostForm(request.POST or None, request.FILES or None)    
+    form = PostForm(request.POST or None, request.FILES or None )    
     if form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
@@ -60,7 +69,7 @@ def post_detail(request, slug):
         return HttpResponseRedirect(post.get_absolute_url())
     else:
         if request.user.is_authenticated:
-            form = CommentForm(isim=request.user.get_full_name, deneme='deneme')
+            form = CommentForm(isim=request.user.get_full_name, ornek='bu bir örnek alandır. modelde olmayan bir alan oluşturldu')
 
     comments = post.comments.all()
     context = {

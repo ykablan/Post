@@ -4,9 +4,11 @@ from .views import post_index, post_create, post_detail, post_update, post_delet
 app_name = 'postt'
 urlpatterns = [
    path('index/', post_index, name='index'),
+   path('kapali/', post_index, name='kapali'),
    path('create/', post_create, name='create'),
    path('detail/<slug:slug>/', post_detail, name='detail'),
    path('update/<slug:slug>', post_update, name='update'),
    path('delete/<slug:slug>', post_delete, name='delete'),
+   
 ]
 

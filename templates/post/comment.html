@@ -4,5 +4,6 @@
 <form method="POST">
     {% csrf_token %}
     {{ form | crispy }}
+    {{deneme}}
     <input type="submit" value="Yorum Yap" class="btn btn-primary">  
 </form>

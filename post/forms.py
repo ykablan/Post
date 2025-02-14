@@ -7,17 +7,21 @@ class PostForm(forms.ModelForm):
     # captcha = ReCaptchaField()
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image']
+        fields = ['title', 'content', 'image', 'checked']
         labels = {
             'title': 'Başlık',
             'content': 'İçerik',
-            'publishing_date': 'Yayımlanma Tarihi'
+            'publishing_date': 'Yayımlanma Tarihi',
+            'checked' :' Servis Kapalı'
         }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'publishing_date': forms.DateTimeInput(attrs={'class': 'form-control'}),
+            #'checked': forms.DateTimeInput(attrs={'class': 'form-control'}),
         }
+    
+        
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -26,10 +30,10 @@ class CommentForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         self.name = kwargs.pop('isim', None)
-        self.deneme = kwargs.pop('deneme', None)
+        self.ornekk = kwargs.pop('ornek', None)
         super().__init__(*args, **kwargs)
-        name = forms.CharField()
-        
+        name = forms.CharField()                
+        self.fields['ornek'] = forms.CharField(initial=self.ornekk)
         if name is not None:
             self.fields['name']= forms.CharField(initial=self.name)
 
