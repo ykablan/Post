@@ -17,7 +17,7 @@
           <p>{{post.content |safe| linebreaks}}</p>
           <p>
                 <a href="{{post.get_absolute_url}}" class="btn btn-primary" role="button">İncele</a>
-                {% if user.is_authenticated %}
+                {% if user.is_superuser %}
                 <a href="{{post.get_update_url}}" class="btn btn-default" role="button">Güncelle</a>
                 <a href="{{post.get_delete_url}}" class="btn btn-danger" role="button">Sil</a>
                 {% endif %}
@@ -32,8 +32,11 @@
             <br>
         {% endfor%}
       <br><hr>
+      
+      {%  if user.is_authenticated  %}
       <h3>Yorum Ekle</h3>
-      {% include 'post/comment.html' %}
+        {% include 'post/comment.html' %}
+      {%endif%}
       <hr>
      
     </div>

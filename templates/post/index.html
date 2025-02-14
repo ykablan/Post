@@ -20,7 +20,7 @@
                   <p>{{post.content |safe| linebreaks |truncatechars:150}}</p>
                   <p>
                         <a href="{{post.get_absolute_url}}" class="btn btn-primary" role="button">İncele</a>
-                        {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
                         <a href="{{post.get_update_url}}" class="btn btn-default" role="button">Güncelle</a>
                         <a href="{{post.get_delete_url}}" class="btn btn-danger" role="button">Sil</a>
                         {% endif %}
