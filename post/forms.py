@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
     # captcha = ReCaptchaField()
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image', 'checked']
+        fields = ['customer','title', 'content', 'image', 'checked' ]
         labels = {
             'title': 'Başlık',
             'content': 'İçerik',

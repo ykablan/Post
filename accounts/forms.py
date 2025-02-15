@@ -14,7 +14,8 @@ class LoginForm(forms.Form):
             if not user:
                 raise forms.ValidationError('Kullanıcı adı veya şifre hatalı')
         return super().clean()
-    
+
+
 class RegisterForm(forms.ModelForm):
     username = forms.CharField(label='Kullanıcı Adı' , max_length=100)
     password1 = forms.CharField(label='Şifre', widget=forms.PasswordInput, max_length=100)
@@ -22,7 +23,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2', 'first_name', 'last_name']
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')

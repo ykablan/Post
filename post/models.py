@@ -4,9 +4,11 @@ from django.utils.text import slugify
 from django.utils.timesince import timesince
 from ckeditor.fields import RichTextField
 from django.shortcuts import get_object_or_404
+from customer.models import Customer
 
 
 class Post(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="müşteriler")
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name="Yazar", related_name='posts')
     title = models.CharField(max_length=120, verbose_name="Başlık")
     content = RichTextField(verbose_name="İçerik")

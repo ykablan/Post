@@ -42,12 +42,14 @@
                     <li><a href="{% url 'postt:index' %}">Açık Postlar</a></li>
                     <li><a href="{% url 'postt:kapali' %}">Kapalı Postlar</a></li>
                     <li><a href="{% url 'accounts:logout' %}">Çıkış</a></li>
+                    <li><a href="#">Hoşgeldin {{request.user.get_full_name}}</a></li>
                     
 
                 {% else %}  
                 <li><a href="{% url 'accounts:home' %}">Anasayfa</a></li>
                 <li><a href="{% url 'accounts:register' %}">Üye Ol</a></li>
-                <li><a href="{% url 'accounts:login' %}">Giriş</a></li>  
+                <li><a href="{% url 'accounts:login' %}">Giriş</a></li>
+                  
                 
 
                 {% endif %}

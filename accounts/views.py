@@ -23,7 +23,7 @@ def register_view(request):
         new_user = authenticate(username=user.username, password=password)
         login(request, new_user)
         return redirect('postt:index')
-    return render(request, 'accounts/form.html', {'form': form, 'title': 'Kayıt Ol'})
+    return render(request, 'accounts/form_edit.html', {'form': form, 'title': 'Alanları Düzenle'})
 
 def logout_view(request):
     logout(request)
