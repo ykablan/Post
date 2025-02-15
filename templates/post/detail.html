@@ -29,8 +29,13 @@
         {% for comment in comments%}
             <h4>{{comment.name}} | <small>{{comment.publishing_date | timesince}} önce </small></h4>
             <p>{{comment.content | linebreaks}}</p>
-            <br>
+            {% if user.is_superuser %}
+                <a href="{{comment.get_update_url}}" class="btn btn-default" role="button">Güncelle</a>
+                <a href="{{comment.get_delete_url}}" class="btn btn-danger" role="button">Sil</a>
+            {% endif %}
+            <br><br><br>
         {% endfor%}
+            
       <br><hr>
       
       {%  if user.is_authenticated  %}

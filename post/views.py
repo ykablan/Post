@@ -97,11 +97,33 @@ def post_update(request, slug):
         'form': form
     }
 
+def comment_update(request, pk):
+    post = get_object_or_404(Comment, pk=pk)
+    if request.user.is_authenticated == False:
+        return redirect('postt:index')
+    form = CommentForm(request.POST or None, request.FILES or None, instance=post)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Başarılı bir şekilde güncellendi.', extra_tags='mesaj-basarili-guncelleme')  
+        return HttpResponseRedirect(post.get_absolute_url())     
+
+    context = {
+        'form': form
+    }
     return render(request, 'post/form.html', context)
     
 
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
+
+    if request.user.is_authenticated == False:
+        return redirect('postt:index')
+
+    post.delete()
+    return redirect('postt:index') 
+
+def comment_delete(request, pk):
+    post = get_object_or_404(Comment, pk=pk)
 
     if request.user.is_authenticated == False:
         return redirect('postt:index')

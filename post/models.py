@@ -31,9 +31,6 @@ class Post(models.Model):
         except AttributeError:
             return ''
         
-        
-         
-    
     def get_absolute_url(self):
         return reverse('postt:detail', kwargs={'slug': self.slug})
     
@@ -43,8 +40,11 @@ class Post(models.Model):
     def get_update_url(self):
         return reverse('postt:update', kwargs={'slug': self.slug})
     
+    
     def get_delete_url(self):
         return reverse('postt:delete', kwargs={'slug': self.slug})
+    
+    
     
     def get_unique_slug(self):
         slug = slugify(self.title.replace('ı', 'i'))
@@ -71,5 +71,17 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
     
+    def get_delete_url(self):
+        try:
+            return reverse('postt:comment_delete', kwargs={'id': self.id})
+        except :
+            return ''
+        
+    def get_update_url(self):
+        try:
+            return reverse('postt:comment_update', kwargs={'id': self.id})
+        except :
+            return ''
+
     class Meta:
         ordering = ['-publishing_date']
