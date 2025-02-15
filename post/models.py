@@ -73,13 +73,13 @@ class Comment(models.Model):
     
     def get_delete_url(self):
         try:
-            return reverse('postt:comment_delete', kwargs={'id': self.id})
+            return reverse('postt:com_delete', kwargs={'pk': self.id})
         except :
             return ''
         
     def get_update_url(self):
         try:
-            return reverse('postt:comment_update', kwargs={'id': self.id})
+            return reverse('postt:com_update', kwargs={'pk': self.id})
         except :
             return ''
 

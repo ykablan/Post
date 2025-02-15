@@ -30,14 +30,19 @@ class CommentForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         self.name = kwargs.pop('isim', None)
-        self.ornekk = kwargs.pop('ornek', None)
+        ornekk = kwargs.pop('ornek', None)
         super().__init__(*args, **kwargs)
-        name = forms.CharField()                
-        self.fields['ornek'] = forms.CharField(initial=self.ornekk)
+        name = forms.CharField()   
+
+        self.fields['ornek'] = forms.CharField(initial=ornekk)
+        if ornekk is not None:
+            self.fields['ornek'].widget.attrs['readonly'] = True
+            
         if name is not None:
             self.fields['name']= forms.CharField(initial=self.name)
 
             if self.name:
                 self.fields['name'].widget.attrs['readonly'] = True
+            
             
         

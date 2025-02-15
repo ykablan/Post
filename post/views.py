@@ -96,12 +96,15 @@ def post_update(request, slug):
     context = {
         'form': form
     }
+    return render(request, 'post/form.html', context)
 
 def comment_update(request, pk):
-    post = get_object_or_404(Comment, pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)    
+    post = get_object_or_404(Post, id = comment.post_id)
+
     if request.user.is_authenticated == False:
         return redirect('postt:index')
-    form = CommentForm(request.POST or None, request.FILES or None, instance=post)
+    form = CommentForm(request.POST or None, request.FILES or None, instance=comment, ornek='bu bir örnek alandır. modelde olmayan bir alan oluşturldu')
     if form.is_valid():
         form.save()
         messages.success(request, 'Başarılı bir şekilde güncellendi.', extra_tags='mesaj-basarili-guncelleme')  
@@ -123,12 +126,12 @@ def post_delete(request, slug):
     return redirect('postt:index') 
 
 def comment_delete(request, pk):
-    post = get_object_or_404(Comment, pk=pk)
-
+    comment = get_object_or_404(Comment, pk=pk)
+    post = get_object_or_404(Post, id = comment.post_id)
     if request.user.is_authenticated == False:
         return redirect('postt:index')
 
-    post.delete()
-    return redirect('postt:index') 
+    comment.delete()
+    return HttpResponseRedirect(post.get_absolute_url()) 
 
 
