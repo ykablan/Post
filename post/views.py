@@ -38,6 +38,7 @@ def post_index(request):
     context = {
         'posts': posts,
     }
+    
     return render(request, 'post/index.html', context)
 
 def post_create(request):
