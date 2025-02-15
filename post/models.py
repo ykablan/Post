@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.utils.timesince import timesince
 from ckeditor.fields import RichTextField
+from django.shortcuts import get_object_or_404
 
 
 class Post(models.Model):
@@ -15,16 +17,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    
-       
 
     def get_comment_count(self):
         count = Comment.objects.filter (post_id = self.id).count()
         return count
     
     def get_son_yorum_tarihi(self):
-        son = Comment.objects.filter (post_id = self.id).first().publishing_date
-        return son        
+        try:
+            comments = Comment.objects.filter(post_id = self.id)
+            comment = timesince(comments.first().publishing_date)
+            comment = "Son Yorum : {} önce".format(comment)
+            return comment
+        except AttributeError:
+            return ''
+        
+        
+         
     
     def get_absolute_url(self):
         return reverse('postt:detail', kwargs={'slug': self.slug})
