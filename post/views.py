@@ -20,7 +20,8 @@ def post_index(request):
             Q(title__icontains=query) |
             Q(content__icontains=query) |
             Q(user__first_name__icontains=query) |
-            Q(user__last_name__icontains=query)
+            Q(user__last_name__icontains=query) |
+            Q(customer__customer_name__icontains=query)
             ).distinct()
 
     paginator = Paginator(post_list, 5) # Show 25 contacts per page
