@@ -12,8 +12,6 @@ def post_index(request):
     if (url == '/post/kapali/'):
         post_list = Post.objects.filter(checked = True)
 
-    
-
     query = request.GET.get('q')
     if query:
         post_list = post_list.filter(
@@ -28,22 +26,17 @@ def post_index(request):
     page = request.GET.get('sayfa')
     try:
         posts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        posts = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        posts = paginator.page(paginator.num_pages)
-    
+    except PageNotAnInteger:        
+        posts = paginator.page(1) # If page is not an integer, deliver first page.
+    except EmptyPage:        
+        posts = paginator.page(paginator.num_pages)    # If page is out of range (e.g. 9999), deliver last page of results.
     
     context = {
         'posts': posts,
-    }
-    
+    }    
     return render(request, 'post/index.html', context)
 
 def post_create(request):
-
     if request.user.is_authenticated == False:
         return redirect('postt:index')
 

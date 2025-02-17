@@ -35,8 +35,9 @@
                 {% if user.is_authenticated %}
 
                     {% if user.is_superuser %}
-                        <li><a href="{% url 'postt:create' %}">Post Oluştur</a></li>
-                        
+                        <li><a href="{% url 'customer:index' %}">Firma Listele</a></li> 
+                        <li><a href="{% url 'customer:create' %}">Firma Oluştur</a></li>
+                        <li><a href="{% url 'postt:create' %}">Post Oluştur</a></li>                        
                     {% endif %}
 
                     <li><a href="{% url 'postt:index' %}">Açık Postlar</a></li>
