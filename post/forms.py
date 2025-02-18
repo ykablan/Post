@@ -1,6 +1,7 @@
 from django import forms
 from .models import Post, Comment
 from django.contrib.auth import authenticate
+from .models import Customer
 # from django_recaptcha.fields import ReCaptchaField
 
 class PostForm(forms.ModelForm):
@@ -20,6 +21,11 @@ class PostForm(forms.ModelForm):
             'publishing_date': forms.DateTimeInput(attrs={'class': 'form-control'}),
             #'checked': forms.DateTimeInput(attrs={'class': 'form-control'}),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['customer'].queryset = Customer.objects.filter(checked = True)
+
+
     
         
 
@@ -31,13 +37,15 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.name = kwargs.pop('isim', None)
         ornekk = kwargs.pop('ornek', None)
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)        
         name = forms.CharField()   
+
+        
 
         self.fields['ornek'] = forms.CharField(initial=ornekk)
         if ornekk is not None:
             self.fields['ornek'].widget.attrs['readonly'] = True
-            
+                        
         if name is not None:
             self.fields['name']= forms.CharField(initial=self.name)
 

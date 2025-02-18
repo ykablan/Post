@@ -14,16 +14,34 @@
           <h4>{{customer.address |safe| linebreaks}}</h4>
           <h4>{{customer.phone}}</h4>
           
-          <p>
-                <a href="{{customer.get_absolute_url}}" class="btn btn-primary" role="button">İncele</a>
-                {% if user.is_superuser %}
+          <p>                              
                 <a href="{{customer.get_update_url}}" class="btn btn-default" role="button">Güncelle</a>
                 <a href="{{customer.get_delete_url}}" class="btn btn-danger" role="button">Sil</a>
-                {% endif %}
+                
           </p>                     
         </div>
       </div>
+      <br><br>
+      <h3>Kontaklar</h3>
+      <hr>
+        {% for contact in contacts%}
+            <h4>{{contact.name}} </h4>
+            <h4>{{contact.title}}</h4>
+            <h4>{{contact.email}}</h4>
+            <h4>{{contact.phone}}</h4>
+              <a href="{{contact.get_update_url}}" class="btn btn-default" role="button">Güncelle</a>
+              <a href="{{contact.get_delete_url}}" class="btn btn-danger" role="button">Sil</a>
+           
+            <hr/>
+        {% endfor%}
+            
+      <br><hr>
       
+      
+      <h3>Kontak Ekle</h3>
+        {% include 'customer/contact.html' %}
+      
+      <hr>
      
     </div>
 </div>  

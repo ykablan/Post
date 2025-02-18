@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
     'post.apps.PostConfig',
     'accounts',
-    'customer',
+    'customer',    
     'crispy_forms',
     "crispy_bootstrap3",
     'django_cleanup',

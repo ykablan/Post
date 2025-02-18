@@ -1,0 +1,9 @@
+{% load crispy_forms_tags %}
+
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form | crispy }}
+    {{deneme}}
+    <input type="submit" value="Kişiyi Kaydet" class="btn btn-primary">  
+</form>

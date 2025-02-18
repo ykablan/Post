@@ -16,8 +16,7 @@
           <h4>Kullanıcı: {{post.user.get_full_name}}</h4>
           <h4>{{post.customer}}</h4>
           <p>{{post.content |safe| linebreaks}}</p>
-          <p>
-                <a href="{{post.get_absolute_url}}" class="btn btn-primary" role="button">İncele</a>
+          <p>                
                 {% if user.is_superuser %}
                 <a href="{{post.get_update_url}}" class="btn btn-default" role="button">Güncelle</a>
                 <a href="{{post.get_delete_url}}" class="btn btn-danger" role="button">Sil</a>
@@ -26,7 +25,7 @@
         </div>
       </div>
       <br><br>
-      
+        
         {% for comment in comments%}
             <h4>{{comment.name}} | <small>{{comment.publishing_date | timesince}} önce </small></h4>
             <p>{{comment.content | linebreaks}}</p>
