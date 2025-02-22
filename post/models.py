@@ -5,10 +5,12 @@ from django.utils.timesince import timesince
 from ckeditor.fields import RichTextField
 from django.shortcuts import get_object_or_404
 from customer.models import Customer
+from django.utils import timezone
+from datetime import timedelta
 
 
 class Post(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="müşteriler")
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="musteriler")
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name="Yazar", related_name='posts')
     title = models.CharField(max_length=120, verbose_name="Başlık")
     content = RichTextField(verbose_name="İçerik")
@@ -60,6 +62,14 @@ class Post(models.Model):
     def save(self, *args, **kwargs):        
         self.slug = self.get_unique_slug()
         return super().save(*args, **kwargs)
+    
+    def get_contract_status(self): 
+        deger = 0       
+        if self.publishing_date > timezone.now() - timedelta(days=2):
+            deger =1
+        if self.publishing_date > timezone.now() - timedelta(days=10) :
+            deger = 2
+        return deger
     
     class Meta:
         ordering = ['-publishing_date']

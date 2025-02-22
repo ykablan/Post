@@ -42,9 +42,9 @@ class CommentForm(forms.ModelForm):
 
         
 
-        self.fields['ornek'] = forms.CharField(initial=ornekk)
-        if ornekk is not None:
-            self.fields['ornek'].widget.attrs['readonly'] = True
+        #self.fields['ornek'] = forms.CharField(initial=ornekk)
+        #if ornekk is not None:
+            #self.fields['ornek'].widget.attrs['readonly'] = True
                         
         if name is not None:
             self.fields['name']= forms.CharField(initial=self.name)

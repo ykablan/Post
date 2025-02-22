@@ -32,26 +32,34 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 
-                {% if user.is_authenticated %}
+                {% if user.is_staff %}
 
                     {% if user.is_superuser %}
-                        <li><a href="{% url 'customer:index' %}">Firma Listele</a></li> 
-                        <li><a href="{% url 'customer:create' %}">Firma Oluştur</a></li>
-                        <li><a href="{% url 'postt:create' %}">Post Oluştur</a></li>                        
+                        {% if "customer" in request.get_full_path %} 
+                            <li><a href="{% url 'customer:create' %}">Firma Oluştur</a></li>
+                        {% else %} 
+                            <li><a href="{% url 'postt:create' %}">Servis Oluştur</a></li>
+                        {% endif %}                        
                     {% endif %}
-
-                    <li><a href="{% url 'postt:index' %}">Açık Postlar</a></li>
-                    <li><a href="{% url 'postt:kapali' %}">Kapalı Postlar</a></li>
+                    
+                    {% if "customer" in request.get_full_path %} 
+                        <li><a href="{% url 'customer:index' %}">Firma Listele</a></li>
+                        <li><a href="{% url 'postt:index' %}">Açık Servisler</a></li>
+                    {% else %}                    
+                        <li><a href="{% url 'postt:index' %}">Açık Servisler</a></li>
+                        <li><a href="{% url 'postt:kapali' %}">Kapalı Servisler</a></li>
+                        <li><a href="{% url 'customer:index' %}">Firma Listele</a></li>
+                    {% endif %}
+                    
                     <li><a href="{% url 'accounts:logout' %}">Çıkış</a></li>
                     <li><a href="#">Hoşgeldin {{request.user.get_full_name}}</a></li>
                     
 
                 {% else %}  
+                
                 <li><a href="{% url 'accounts:home' %}">Anasayfa</a></li>
                 <li><a href="{% url 'accounts:register' %}">Üye Ol</a></li>
                 <li><a href="{% url 'accounts:login' %}">Giriş</a></li>
-                  
-                
 
                 {% endif %}
                 

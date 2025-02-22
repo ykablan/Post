@@ -3,6 +3,7 @@ from .views import *
 
 app_name = 'postt'
 urlpatterns = [
+   
    path('index/', post_index, name='index'),
    path('kapali/', post_index, name='kapali'),
    path('create/', post_create, name='create'),

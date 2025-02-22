@@ -1,13 +1,19 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404,HttpResponseRedirect,redirect
 from .models import Post, Comment
+from customer.models import Customer
 from.forms import PostForm, CommentForm
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
 
+
 def post_index(request):
+    if request.user.is_staff == False:
+        return redirect('/home/')
+    
     post_list = Post.objects.filter(checked = False)
+    
     url = request.get_full_path()
     if (url == '/post/kapali/'):
         post_list = Post.objects.filter(checked = True)
@@ -19,7 +25,9 @@ def post_index(request):
             Q(content__icontains=query) |
             Q(user__first_name__icontains=query) |
             Q(user__last_name__icontains=query) |
-            Q(customer__customer_name__icontains=query)
+            Q(customer__name__icontains=query) |
+            Q(comments__name__icontains=query) |
+            Q(comments__content__icontains=query) 
             ).distinct()
 
     paginator = Paginator(post_list, 5) # Show 25 contacts per page
@@ -37,8 +45,8 @@ def post_index(request):
     return render(request, 'post/index.html', context)
 
 def post_create(request):
-    if request.user.is_authenticated == False:
-        return redirect('postt:index')
+    if request.user.is_staff == False:
+        return redirect('/home/')
 
     form = PostForm(request.POST or None, request.FILES or None )    
     if form.is_valid():
@@ -54,6 +62,9 @@ def post_create(request):
     return render(request, 'post/form.html', context)
 
 def post_detail(request, slug):
+    if request.user.is_staff == False:
+        return redirect('/home/')
+    
     post = get_object_or_404(Post, slug=slug)  
 
     form = CommentForm(request.POST or None)
@@ -75,11 +86,10 @@ def post_detail(request, slug):
     return render(request, 'post/detail.html', context)
 
 def post_update(request, slug):
-
+    if request.user.is_staff == False:
+        return redirect('/home/')
+    
     post = get_object_or_404(Post, slug=slug)
-
-    if request.user.is_authenticated == False:
-        return redirect('postt:index')
 
     form = PostForm(request.POST or None, request.FILES or None, instance=post)
     if form.is_valid():
@@ -94,6 +104,9 @@ def post_update(request, slug):
     return render(request, 'post/form.html', context)
 
 def comment_update(request, pk):
+    if request.user.is_staff == False:
+        return redirect('/home/')
+
     comment = get_object_or_404(Comment, pk=pk)    
     post = get_object_or_404(Post, id = comment.post_id)
 
@@ -112,6 +125,9 @@ def comment_update(request, pk):
     
 
 def post_delete(request, slug):
+    if request.user.is_staff == False:
+        return redirect('/home/')
+
     post = get_object_or_404(Post, slug=slug)
 
     if request.user.is_authenticated == False:
@@ -121,6 +137,9 @@ def post_delete(request, slug):
     return redirect('postt:index') 
 
 def comment_delete(request, pk):
+    if request.user.is_staff == False:
+        return redirect('/home/')
+    
     comment = get_object_or_404(Comment, pk=pk)
     post = get_object_or_404(Post, id = comment.post_id)
     if request.user.is_authenticated == False:

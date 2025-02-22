@@ -9,13 +9,24 @@
         {% for customer in customers %}
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6 col-md-offset-3" >
               <div class="thumbnail">                
-                <div class="caption">
+                <div class="caption" 
+                {% if customer.get_contract_status == 0 %}  
+                    style="background-color: hsl(0, 80%, 63%);" 
+                {% endif %} 
+                
+                {% if customer.get_contract_status == 1 %}  
+                    style="background-color: hsl(53, 82%, 57%);" 
+                {% endif %}
+                
+                >
+                
                    
-                  <h3>{{customer.name}} </h3>
+                  <h3>{{customer.name}} <small> {{customer.contract}}</small></h3>
                   <h4>{{customer.address |safe| linebreaks |truncatechars:150}} </h4>
-                  <h4>{{customer.phone}}</h4>                  
+                  <h4>{{customer.phone}}</h4> 
+
                   <p>
                         <a href="{{customer.get_absolute_url}}" class="btn btn-primary" role="button">İncele</a>
                         {% if user.is_superuser %}
@@ -34,16 +45,16 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="pagination">
             <span class="step-links">
-                {% if posts.has_previous %}
-                    <a href="?sayfa={{ posts.previous_page_number }} {% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Önceki</a>
+                {% if customers.has_previous %}
+                    <a href="?sayfa={{ customers.previous_page_number }} {% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Önceki</a>
                 {% endif %}
         
                 <span class="current">
-                    Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+                    Page {{ customers.number }} of {{ customers.paginator.num_pages }}.
                 </span>
         
-                {% if posts.has_next %}
-                    <a href="?sayfa={{ posts.next_page_number }} {% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Sonraki</a>
+                {% if customers.has_next %}
+                    <a href="?sayfa={{ customers.next_page_number }} {% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Sonraki</a>
                 {% endif %}
             </span>
         </div>
