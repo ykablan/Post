@@ -8,7 +8,7 @@ class Customer(models.Model):
     address = models.TextField(verbose_name="Müşteri Adresi")
     phone=models.CharField(max_length=50, verbose_name="Müşteri Telefonu")
     checked = models.BooleanField(default=True, verbose_name="Aktif-Pasif")
-    contract = models.DateTimeField(verbose_name="Sözleşme Tarihi", null=True)
+    contract = models.DateField(verbose_name="Sözleşme Tarihi", null=True)
     created_date=models.DateTimeField(auto_now_add=True)
     
 
