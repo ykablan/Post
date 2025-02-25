@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+from datetime import date
 
 class Customer(models.Model):
     name = models.CharField(max_length=200, verbose_name="Müşteri Adı")
@@ -26,9 +27,9 @@ class Customer(models.Model):
         return reverse('customer:delete', kwargs={'pk': self.pk})
     
     def get_contract_status(self):        
-        if self.contract < timezone.now():
+        if self.contract < date.today():
             return 0
-        if self.contract < timezone.now() + timedelta(days=10) :
+        if self.contract < date.today() + timedelta(days=10) :
             return 1
         return 2
     

@@ -11,18 +11,20 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
               <div class="thumbnail">                
-                <div class="caption"  
-            {% if post.checked == False %}    
-            {% if post.get_contract_status == 2 %}  
-                style="background-color: hsl(0, 80%, 63%);" 
-            {% endif %} 
-            
-            {% if customer.get_contract_status == 1 %}  
-                style="background-color: hsl(53, 82%, 57%);" 
-            {% endif %}
-            {% endif %}
-
+                <div class="caption" 
+                {% if post.checked == False %}   
+                    {% if post.get_contract_status == "2" %}  
+                        style="background-color: hsl(0, 80%, 63%);"                
+                    {% endif %}             
+                    {% if post.get_contract_status == "1" %}  
+                        style="background-color: hsl(53, 82%, 57%);" 
+                    {% endif %}
+                    {% if post.get_contract_status == "0" %}  
+                        style="background-color: hsl(40, 10%, 94%);" 
+                    {% endif %}
+                {% endif %} 
             >
+            aaaaaaaaaaaaaaaaaaaa{{post.get_contract_status}}
 
                     {% if post.image %}
                         <img src="{{post.image.url}}" class="img-responsive">

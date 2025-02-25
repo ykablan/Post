@@ -64,11 +64,11 @@ class Post(models.Model):
         return super().save(*args, **kwargs)
     
     def get_contract_status(self): 
-        deger = 0       
+        deger = "0"       
         if self.publishing_date > timezone.now() - timedelta(days=2):
-            deger =1
+            deger ="1"
         if self.publishing_date > timezone.now() - timedelta(days=10) :
-            deger = 2
+            deger = "2"
         return deger
     
     class Meta:
